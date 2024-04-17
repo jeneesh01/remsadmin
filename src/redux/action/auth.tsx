@@ -6,11 +6,16 @@ import {
   USER_INFO,
   getStorageData,
 } from '../../services/storageHandler/storageHandler';
-import { setIsFirstTime, setIsLogin, setRecentSearch, setUserInfo } from '../reducer/authSlice';
-import { showMessage } from 'react-native-flash-message';
-import { mixpanel, mixpanelTrack } from '../../util/mixpanel';
-import * as Sentry from '@sentry/react-native'
-import { AuthService } from '../../services/service';
+import {
+  setIsFirstTime,
+  setIsLogin,
+  setRecentSearch,
+  setUserInfo,
+} from '../reducer/authSlice';
+import {showMessage} from 'react-native-flash-message';
+import {mixpanel, mixpanelTrack} from '../../util/mixpanel';
+import * as Sentry from '@sentry/react-native';
+import {AuthService} from '../../services/service';
 
 export const getIsLogin = () => async (dispatch: AppDispatch) => {
   try {
@@ -41,19 +46,13 @@ export const loadRecentSearchData = () => async (dispatch: AppDispatch) => {
   }
 };
 
-
-
 export const getUserData = () => async (dispatch: AppDispatch) => {
   const user_auth_data = await getStorageData(USER_INFO);
-  dispatch(setUserInfo(user_auth_data))
+  dispatch(setUserInfo(user_auth_data));
 };
 
 export const signIn =
-  (
-    email: string,
-    password: string,
-    onSuccess: (success: boolean) => void,
-  ) =>
+  (email: string, password: string, onSuccess: (success: boolean) => void) =>
   async (disptach: AppDispatch, getState: () => RootState) => {
     const cleanedEmail = email.replace(/\s/g, '');
     const cleanPassword = password.replace(/\s/g, '');
@@ -73,7 +72,6 @@ export const signIn =
         };
         const loginData = await AuthService.login(data);
         if (loginData) {
-
           disptach(setIsLogin(true));
           disptach(setUserInfo(loginData));
           showMessage({
@@ -110,8 +108,6 @@ export const signUp =
     email: string,
     password: string,
     confirmPassword: string,
-    name: string,
-    user_type: string,
     onSuccess: (success: boolean) => void,
   ) =>
   async (disptach: AppDispatch, getState: () => RootState) => {
@@ -146,9 +142,7 @@ export const signUp =
       try {
         const data = {
           email: cleanedEmail.toLowerCase(),
-          name: name,
           password: cleanPassword,
-          user_type:user_type
         };
         const loginData = await AuthService.register(data);
         console.log('Logindata', loginData);

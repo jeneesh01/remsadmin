@@ -23,7 +23,7 @@ const getProperties = async () => {
       throw err;
     });
 };
-const getProperty = async (id:string) => {
+const getProperty = async (id: string) => {
   return instanceWithoutAuth
     .get(`property/${id}`)
     .then(result => {
@@ -33,19 +33,18 @@ const getProperty = async (id:string) => {
       console.log('Error in dashboard data', err);
     });
 };
-const addProperty = async (body:any) => {
-   return instanceWithAuth
-   .post('property/')
-   .then(result=>{
-    return result.data;
-   })
-   .catch(err=>{
-    console.log("Error in add data",err);
-    
-   })
+const addProperty = async (body: any) => {
+  return instanceWithAuth
+    .post('property/')
+    .then(result => {
+      return result.data;
+    })
+    .catch(err => {
+      console.log('Error in add data', err);
+    });
 };
 
-const modifyProperty = async (body: any,id:string) => {
+const modifyProperty = async (body: any, id: string) => {
   return instanceWithAuth
     .post(`property/${id}`, body)
     .then(result => {
@@ -56,7 +55,7 @@ const modifyProperty = async (body: any,id:string) => {
     });
 };
 
-const deleteProperty = async (id:string) => {
+const deleteProperty = async (id: string) => {
   return instanceWithAuth
     .delete(`property/${id}`)
     .then(result => {
@@ -66,11 +65,21 @@ const deleteProperty = async (id:string) => {
       console.log('Error ', err);
     });
 };
-
+const propertyVerifty = async (body: any, id: string) => {
+  return instanceWithAuth
+    .get(`api/admin/verify-property/${id}`)
+    .then(res => {
+      return res.data;
+    })
+    .catch(e => {
+      console.log('Error user authorize api', e);
+    });
+};
 export default {
-    getProperties,
-    modifyProperty,
-    getProperty,
-    deleteProperty,
-    addProperty,
+  getProperties,
+  modifyProperty,
+  getProperty,
+  deleteProperty,
+  addProperty,
+  propertyVerifty,
 };
