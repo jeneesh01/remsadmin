@@ -26,29 +26,22 @@ const Home = () => {
     <View style={styles.container}>
       <SafeAreaView style={{backgroundColor: colors.primary}} />
       <Header />
-      {propertyDetailList[0]?.property_name.length > 0 ? (
-        <FlatList
-          data={propertyDetailList}
-          renderItem={({
-            item,
-            index,
-          }: {
-            item: IPropertyDetail;
-            index: number;
-          }) => <Property item={item} index={index} />}
-          keyExtractor={propertyDetailList =>
-            propertyDetailList._id + 'fdfdsfasd'
-          }
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 80, paddingTop: 20}}
-          maxToRenderPerBatch={10}
-          onEndReached={loadMoreItems}
-          onEndReachedThreshold={0.1}
-          windowSize={5}
-          disableVirtualization
-          ListFooterComponent={<View style={{marginBottom: 30}} />}
-        />
-      ) : null}
+
+      <FlatList
+        data={propertyDetailList?.data}
+        renderItem={({item, index}: {item: IPropertyDetail; index: number}) => (
+          <Property item={item} index={index} />
+        )}
+        // keyExtractor={item?._id + item?.property_name}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingBottom: 80, paddingTop: 20}}
+        maxToRenderPerBatch={10}
+        onEndReached={loadMoreItems}
+        onEndReachedThreshold={0.1}
+        windowSize={5}
+        disableVirtualization
+        ListFooterComponent={<View style={{marginBottom: 30}} />}
+      />
     </View>
   );
 };

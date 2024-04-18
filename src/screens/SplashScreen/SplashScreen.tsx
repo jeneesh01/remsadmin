@@ -30,6 +30,8 @@ const SplashScreen = () => {
         routes: [{name: 'Drawer'}],
       });
     } else {
+      dispatch(getPropertiesData());
+
       navigation.reset({
         index: 0,
         routes: [{name: 'Auth'}],

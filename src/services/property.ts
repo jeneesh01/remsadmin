@@ -14,7 +14,7 @@ import {instanceWithAuth, instanceWithoutAuth} from '../util/axiosHandler';
 // };
 const getProperties = async () => {
   return instanceWithoutAuth
-    .get(`property`)
+    .get(`api/property`)
     .then(result => {
       return result.data;
     })
@@ -34,16 +34,20 @@ const getProperty = async (id: string) => {
     });
 };
 const addProperty = async (body: any) => {
-  return instanceWithAuth
-    .post('property/')
-    .then(result => {
-      return result.data;
-    })
-    .catch(err => {
-      console.log('Error in add data', err);
-    });
-};
+  console.log('Body', body);
 
+  try {
+    const response = await instanceWithAuth.post('api/property/', body, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log('Error in add data', error);
+    throw error;
+  }
+};
 const modifyProperty = async (body: any, id: string) => {
   return instanceWithAuth
     .post(`property/${id}`, body)
