@@ -71,7 +71,7 @@ const deleteProperty = async (id: string) => {
 };
 const propertyVerifty = async (body: any, id: string) => {
   return instanceWithAuth
-    .get(`api/admin/verify-property/${id}`)
+    .post(`api/admin/verify-property/${id}`, body)
     .then(res => {
       return res.data;
     })

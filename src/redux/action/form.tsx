@@ -9,7 +9,10 @@ export const verificationProperty =
   (body: any, id: string) => async (dispatch: AppDispatch) => {
     const data = await PropertyService.propertyVerifty(body, id);
     if (data.status) {
-      dispatch(setPropertyDataList(data));
+      showMessage({
+        type: 'info',
+        message: 'Property Verified Successfylly',
+      });
     } else {
       showMessage({
         type: 'warning',
